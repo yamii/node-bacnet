@@ -108,7 +108,7 @@ https://svn.code.sf.net/p/bacnet/code/branches/jbennet/bacnet-stack-0-5-7/
 
 ### Ran out of invoke ids!
 
-Ocassionally runs out of invocation IDs - the request will throw an 
+Occasionally runs out of invocation IDs - the request will throw an
 error immediately and with PRINT_ENABLED will print to console "Ran out 
 of invoke ids!" - this may not be recoverable - we have to look into how 
 the underlying c library issues and reuses the invocation ids.

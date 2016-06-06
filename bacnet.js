@@ -39,7 +39,7 @@ function setupMethods (bacnetAddon, confirmedCallbacks) {
       value = new bacnet.BacnetValue(value)
     }
     const invokeId = bacnetAddon.writeProperty(deviceInstance, bacnet.objectTypeToNumber(objectType), objectInstance, bacnet.propertyKeyToNumber(property), arrayIndex, value)
-    if (invokeId === 0) throw new Error('Invoking BACnet read failed')
+    if (invokeId === 0) throw new Error('Invoking BACnet write failed')
     return addCallback(invokeId, callback)
   }
 }

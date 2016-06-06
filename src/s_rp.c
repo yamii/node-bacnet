@@ -124,7 +124,12 @@ uint8_t Send_Read_Property_Request_Address(
                 "(exceeds destination maximum APDU)!\n");
 #endif
         }
-    }
+    } else {
+     #if PRINT_ENABLED
+         fprintf(stderr,
+             "Ran out of invoke ids!\n");
+     #endif
+     }
 
     return invoke_id;
 }
