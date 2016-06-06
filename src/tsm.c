@@ -169,7 +169,8 @@ const char * tsm_state_to_string(BACNET_TSM_STATE state) {
 void print_tsm_table() {
     if (tsm_transaction_idle_count() != MAX_TSM_TRANSACTIONS) {
         printf("%s\t%s\t%s\t%s\t%s\t%s\n", "tsm-idx", "invkid", "retry", "timer", "req-len", "state");
-        for (int tsm_index = 0; tsm_index < MAX_TSM_TRANSACTIONS; tsm_index++) {
+        int tsm_index;
+        for (tsm_index = 0; tsm_index < MAX_TSM_TRANSACTIONS; tsm_index++) {
             BACNET_TSM_DATA tsm_data = TSM_List[tsm_index];
             if (tsm_data.state != TSM_STATE_IDLE || tsm_data.InvokeID) {
                 printf("%u\t%u\t%u\t%d\t%d\t%s\n", tsm_index, tsm_data.InvokeID, tsm_data.RetryCount, tsm_data.RequestTimer, tsm_data.apdu_len, tsm_state_to_string(tsm_data.state));
