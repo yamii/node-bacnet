@@ -221,7 +221,7 @@ uint8_t tsm_next_free_invokeID(
         }
     } else {
 #if PRINT_ENABLED
-        printf("All TSM transactions used");
+        printf("All TSM transactions used\n");
 #endif
     }
 
