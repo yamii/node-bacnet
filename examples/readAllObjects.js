@@ -1,3 +1,6 @@
+
+const deviceNumber = process.argv[2]
+
 const bacnet = require('../bacnet.js')
 const async = require('async')
 const r = bacnet.init({
@@ -29,7 +32,7 @@ function receiveObjectList (err, property) {
   if (err) return console.log('ERROR', err)
   console.log('Received property /', objectIdToString(property.object), '/', bacnet.propertyKeyToString(property.property))
   async.mapSeries(property.value, function (objectId, objectRead) {
-    async.mapSeries(['object-name', 'description'], (propertyName, propertyRead) => r.readProperty(Number(process.argv[2]), objectId.type, objectId.instance, propertyName, false, (err, propertyValue) => {
+    async.mapSeries(['object-name', 'description'], (propertyName, propertyRead) => r.readProperty(Number(deviceNumber), objectId.type, objectId.instance, propertyName, false, (err, propertyValue) => {
       if (err) {
         propertyRead(null, 'NONE')
       } else {
@@ -54,9 +57,9 @@ function receiveObjectList (err, property) {
   })
 }
 
-withAddressOrId(process.argv[2], function (addressOrId) {
+withAddressOrId(deviceNumber, function (addressOrId) {
   console.log('read-property invoke',
-    r.readProperty(addressOrId, 'device', process.argv[2], 'object-list', false, receiveObjectList))
+    r.readProperty(addressOrId, 'device', deviceNumber, 'object-list', false, receiveObjectList))
 })
 
 setTimeout(function () {}, 4000)
