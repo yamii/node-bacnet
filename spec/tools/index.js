@@ -18,7 +18,7 @@ function readProperty (device, objectType, objectInstance, propertyId, arrayInde
   this.send({method: 'readProperty', args: Array.from(arguments)})
 }
 
-function writeProperty (device, objectType, objectInstance, propertyId, arrayIndex, value) {
+function writeProperty (device, objectType, objectInstance, propertyId, arrayIndex, value, priority) {
   this.send({method: 'writeProperty', args: Array.from(arguments)})
 }
 

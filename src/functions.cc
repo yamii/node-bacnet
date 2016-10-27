@@ -202,13 +202,16 @@ NAN_METHOD(writeProperty) {
     int32_t object_instance = info[2]->ToInt32()->Value();
     int32_t object_property = info[3]->ToInt32()->Value();
     uint32_t array_index = BACNET_ARRAY_ALL;
-
     if (info[4]->IsUint32()) {
         array_index = info[4]->ToUint32()->Value();
     }
+    Local<Object> valueObject = Nan::To<Object>(info[5]).ToLocalChecked();
+    uint8_t priority = BACNET_NO_PRIORITY;
+    if (info[6]->IsUint32()) {
+        priority = info[6]->ToUint32()->Value();
+    }
 
     if (addressed) {
-        Local<Object> valueObject = Nan::To<Object>(info[5]).ToLocalChecked();
         BacnetValue * bacnetValue = BacnetValue::Unwrap<BacnetValue>(valueObject);
         BACNET_APPLICATION_DATA_VALUE object_value = {};
         if (bacnetValue->bacnetValue(&object_value)) {
@@ -219,7 +222,7 @@ NAN_METHOD(writeProperty) {
                 object_instance,
                 (BACNET_PROPERTY_ID)object_property,
                 &object_value,
-                BACNET_NO_PRIORITY,
+                priority,
                 array_index);
             info.GetReturnValue().Set(Nan::New(invoke_id));
         } else {
