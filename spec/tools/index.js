@@ -22,6 +22,7 @@ function writeProperty (device, objectType, objectInstance, propertyId, arrayInd
   this.send({method: 'writeProperty', args: Array.from(arguments)})
 }
 
+// Starts a Bacnet device in a child process
 exports.deviceProcess = function deviceProcess (config) {
   const device = fork(path.join(__dirname, '/deviceFromString.js'))
   device.send(config || false) // initialises with no args
@@ -42,6 +43,7 @@ exports.deviceProcess = function deviceProcess (config) {
   return device
 }
 
+// find a network interface on the machine which is broadcast capable (loopback doesn't allow broadcast)
 exports.getSuitableBroadcastInterface = function getSuitableBroadcastInterface () {
   const ifaces = os.networkInterfaces()
   for (var ifaceName of Object.keys(ifaces)) {
@@ -53,6 +55,8 @@ exports.getSuitableBroadcastInterface = function getSuitableBroadcastInterface (
     }
   }
 }
+
+// get a network interface by name
 exports.getInterfaceIP = function getInterfaceIP (ifaceName) {
   const ifaces = os.networkInterfaces()
   for (var address of ifaces[ifaceName]) {

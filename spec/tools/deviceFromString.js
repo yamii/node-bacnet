@@ -1,3 +1,4 @@
+// utility to start a bacnet device using a config provided from a parent process. Used in tests as only one bacnet client can run in each process
 var device
 
 function initializeDevice (config) {
