@@ -13,6 +13,8 @@ function BACnetInstance (config) {
   const confirmedCallbacks = {}
   setupMethods.call(this, bacnetAddon, confirmedCallbacks)
   setupHandlers.call(this, confirmedCallbacks)
+
+  this.applicationTagToNumber = function () {}
 }
 
 function setupMethods (bacnetAddon, confirmedCallbacks) {
