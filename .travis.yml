@@ -2,7 +2,7 @@ language: cpp
 sudo: required
 dist: trusty
 env:
-  - NODE_VERSION="node"
+  - NODE_VERSION="6"
   - NODE_VERSION="4"
 compiler:
   - clang-3.6

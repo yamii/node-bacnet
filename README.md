@@ -5,6 +5,10 @@
 This is an experiment to see if it is viable to build a thin wrapper around the
 [bacnet-stack c library](http://bacnet.sourceforge.net/) using the Node.js addons api.
 
+## Requirements
+
+- node-v4 (node-v6 passes automated tests, but not currently used)
+
 ## Contents
 
 - bacnet-stack/ - contains the full contents of the c library checked out from svn://svn.code.sf.net/p/bacnet/code/trunk/bacnet-stack
