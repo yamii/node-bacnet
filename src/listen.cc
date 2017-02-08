@@ -46,6 +46,7 @@ void runListen(void *arg) {
     }
 }
 
+// Start a separate thread to listen to the bacnet socket and run the layers of the bacnet stack
 void listenLoop() {
   uv_thread_t listen_thread_id;
   uv_thread_create(&listen_thread_id, runListen, 0);

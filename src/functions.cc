@@ -17,6 +17,7 @@
 #include "BacnetValue.h"
 
 
+// Returns the object type string for an object type number. If a string is provided, it is checked for validity and returned
 NAN_METHOD(objectTypeToString) {
     std::ostringstream errorStringStream;
     std::string inputString = extractString(info[0].As<v8::String>());
@@ -37,6 +38,8 @@ NAN_METHOD(objectTypeToString) {
         Nan::ThrowError(errorStringStream.str().c_str());
     }
 }
+
+// Returns the object type number for an object type string. If a number is provided it is checked for validity and returned
 NAN_METHOD(objectTypeToNumber) {
     std::ostringstream errorStringStream;
     std::string inputString = extractString(info[0].As<v8::String>());
@@ -54,6 +57,8 @@ NAN_METHOD(objectTypeToNumber) {
         Nan::ThrowError(errorStringStream.str().c_str());
     }
 }
+
+// Returns the property key string for the property number provided. If a string is provided it is checked for validity and returned
 NAN_METHOD(propertyKeyToString) {
     std::ostringstream errorStringStream;
     std::string inputString = extractString(info[0].As<v8::String>());
@@ -80,6 +85,8 @@ NAN_METHOD(propertyKeyToString) {
         Nan::ThrowError(errorStringStream.str().c_str());
     }
 }
+
+// Returns the property number for a property key string provided. If a number is provided it is checked for validity and returned
 NAN_METHOD(propertyKeyToNumber) {
     std::ostringstream errorStringStream;
     std::string inputString = extractString(info[0].As<v8::String>());
@@ -106,6 +113,7 @@ NAN_METHOD(propertyKeyToNumber) {
 }
 
 // whois([destination, [min_id , [max_id]]])
+// Send a whois request to the destination device, optionally specifying a minimum and maximum device id
 NAN_METHOD(whois) {
     int32_t min_id = -1;
     int32_t max_id = -1;
@@ -135,6 +143,8 @@ NAN_METHOD(whois) {
     info.GetReturnValue().Set(Nan::New(true));
 }
 
+// Get a bacnet address, either by converting a representation of an address, or, if the value is a number, looking it
+// up as a device id in the table of devices bound to addresses
 bool addressOrBoundDeviceIdToC(Local<Value> value, unsigned * max_apdu, BACNET_ADDRESS * dest) {
     if (value->IsNumber()) {  // device id
         int32_t device_id = value->ToInt32()->Value();
@@ -153,6 +163,7 @@ bool addressOrBoundDeviceIdToC(Local<Value> value, unsigned * max_apdu, BACNET_A
 }
 
 // readProperty(deviceId, objectType, objectId, property [, arrayIndex])
+// Read a property of a remote device
 NAN_METHOD(readProperty) {
     BACNET_ADDRESS dest = {};
     unsigned max_apdu = 0;
@@ -182,7 +193,8 @@ NAN_METHOD(readProperty) {
     }
 }
 
-// isBound(deviceId) - checks whether a deviceId is already bound and can be used to address a device
+// isBound(deviceId)
+// checks whether a deviceId is already bound and can be used to address a device
 NAN_METHOD(isBound) {
     BACNET_ADDRESS dest = {};
     unsigned max_apdu = 0;
@@ -193,6 +205,7 @@ NAN_METHOD(isBound) {
 }
 
 // writeProperty(deviceId, objectType, objectId, property, arrayIndex, value [, priority])
+// Write a property to a remote device
 NAN_METHOD(writeProperty) {
     BACNET_ADDRESS dest = {};
     unsigned max_apdu = 0;
@@ -233,6 +246,7 @@ NAN_METHOD(writeProperty) {
     }
 }
 
+// Start a separate thread to listen to the bacnet socket and run the layers of the bacnet stack
 NAN_METHOD(listen) {
   listenLoop();
 }
